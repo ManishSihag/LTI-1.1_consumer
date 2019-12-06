@@ -1,0 +1,12 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<form id="form" class="container" action="/launch" method="GET" target="_blank" >
+  <div class="form-group">
+      {{#ltiParameters}}
+    <label>{{key}}</label>
+    <input class="form-control" type="text" name={{key}} value={{value}}>
+     {{/ltiParameters}}
+  </div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>

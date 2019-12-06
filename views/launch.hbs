@@ -1,0 +1,17 @@
+<form id="ltiform" action={{action}} method="POST">
+    
+    <input class="form-control" type="hidden" name="lti_message_type" value={{ltiParams.lti_message_type}}>
+    <input class="form-control" type="hidden" name="lti_version" value={{ltiParams.lti_version}}>
+    <input class="form-control" type="hidden" name="resource_link_id" value={{ltiParams.resource_link_id}}>
+    <input class="form-control" type="hidden" name="oauth_consumer_key" value={{ltiParams.oauth_consumer_key}}>
+    <input class="form-control" type="hidden" name="oauth_signature_method" value={{ltiParams.oauth_signature_method}}>
+    <input class="form-control" type="hidden" name="oauth_timestamp" value={{ltiParams.oauth_timestamp}}>
+    <input class="form-control" type="hidden" name="oauth_nonce" value={{ltiParams.oauth_nonce}}>
+    <input class="form-control" type="hidden" name="oauth_version" value={{ltiParams.oauth_version}}>
+    <input class="form-control" type="hidden" name="oauth_signature" value={{ltiParams.oauth_signature}}>
+    
+</form>
+
+<script >
+     document.getElementById("ltiform").submit();
+</script>
