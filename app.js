@@ -6,7 +6,10 @@ var logger = require('morgan');
 const config = require('./config')
 var indexRouter = require('./routes/index');
 var launchRouter = require('./routes/launch');
+var showResult = require('./routes/result')
 const port = process.env.PORT || config.port;
+const bodyParser = require('body-parser');
+const xmlparser = require('express-xml-bodyparser');
 var app = express();
 
 // view engine setup
@@ -18,9 +21,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(xmlparser());
 
 app.use('/', indexRouter);
 app.use('/launch', launchRouter);
+app.use('/result', showResult);
 
 app.listen(port, ()=>{
   console.log('listening on port ', port);

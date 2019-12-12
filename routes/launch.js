@@ -10,6 +10,11 @@ router.get('/', function(req, res, next) {
     lti_message_type : req.query.lti_message_type,
     lti_version : req.query.lti_version,
     resource_link_id : req.query.resource_link_id,
+    roles : req.query.roles,
+
+    //lis
+    lis_result_sourcedid: req.query.lis_result_sourcedid,
+    lis_outcome_service_url: req.query.lis_outcome_service_url, 
 
     oauth_consumer_key: req.query.oauth_consumer_key,
     oauth_signature_method: req.query.oauth_signature_method,
