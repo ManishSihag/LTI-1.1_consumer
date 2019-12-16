@@ -23,11 +23,11 @@
         "key": "oauth_version",
         "value": "1.0"
     },
-    // {
-    //     "key": "roles",
-    //     "value":"Instructor",
+    {
+        "key": "roles",
+        "value":"Instructor",
         
-    // },
+    },
     {
         "key": "oauth_consumer_key",
         "value":"12345"
