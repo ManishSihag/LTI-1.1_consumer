@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var oauth = require('oauth-sign')
-var timestamp = Math.round(Date.now() / 1000);
 const crypto = require('crypto');
 
 
@@ -18,7 +17,7 @@ router.get('/', function(req, res, next) {
 
     oauth_consumer_key: req.query.oauth_consumer_key,
     oauth_signature_method: req.query.oauth_signature_method,
-    oauth_timestamp: timestamp, 
+    oauth_timestamp: Math.round(Date.now() / 1000), 
     oauth_nonce: crypto.randomBytes(16).toString('base64'),
     oauth_version: req.query.oauth_version
   }
