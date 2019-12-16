@@ -46,7 +46,7 @@
     },
     {
         "key": "tool_provider_url",
-        "value":"http://localhost:5000/lti"
+        "value":"https://lti-tool-provider.herokuapp.com/lti"
     }
     
  ]

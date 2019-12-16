@@ -8,7 +8,6 @@ var indexRouter = require('./routes/index');
 var launchRouter = require('./routes/launch');
 var showResult = require('./routes/result')
 const port = process.env.PORT || config.port;
-const bodyParser = require('body-parser');
 const xmlparser = require('express-xml-bodyparser');
 var app = express();
 
