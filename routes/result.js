@@ -13,7 +13,7 @@ router.post('/',(req, res)=>{
 var signer =  new HMAC_SHA1();
 var lis_outcome_service_url = "https://consumer-lti.herokuapp.com/result";
 var tool_secret = "secret";
-//console.log(req.headers.authorization);
+
 
 var authHeaders = stringToArray(req.headers.authorization);
 var a = decodeURIComponent(authHeaders[5]);
