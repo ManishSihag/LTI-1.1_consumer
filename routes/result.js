@@ -3,12 +3,20 @@ var router = express.Router();
 var oauth = require('oauth-sign')
 var uuid = require('node-uuid');
 var xml_builder = require('xmlbuilder');
+var redis = require('redis');
+
+if(process.env.REDISCLOUD_URL){
+  var client = redis.createClient(process.env.REDISCLOUD_URL, {no_ready_check: true}); 
+}
+else{
+  var client = redis.createClient('6379', 'localhost', {no_ready_check: true});
+}
 
 
 
 router.post('/', (req, res) => {
 
-
+  
     var lis_outcome_service_url = "https://consumer-lti.herokuapp.com/result";
     var tool_secret = "secret";
 
@@ -41,15 +49,39 @@ router.post('/', (req, res) => {
         if (req.body.imsx_poxenveloperequest.imsx_poxbody[0].hasOwnProperty('replaceresultrequest')) {
             result = getResult(req.body);
             xml = outcomeResponse('replaceResult', result.status, result.discription);
-            return res.status(200).send(xml);
+
+            client.set([result.sourcedid, result.score], function(err, reply) {
+              if(!err)  
+               {console.log('Data sent to db', reply);
+                res.status(200).send(xml);}
+                else{
+                  res.status(500);
+                }
+              });
+            
         } else if (req.body.imsx_poxenveloperequest.imsx_poxbody[0].hasOwnProperty('deleteresultrequest')) {
             result = getResult(req.body);
             xml = outcomeResponse('deleteResult', result.status, result.discription);
-            return res.status(200).send(xml);
+            client.set([result.sourcedid, result.score], function(err, reply) {
+              if(!err)  
+               {console.log('Data sent to db', reply);
+                res.status(200).send(xml);}
+                else{
+                  res.status(500);
+                }
+              });
         } else if (req.body.imsx_poxenveloperequest.imsx_poxbody[0].hasOwnProperty('readrequest')) {
             result = getResult(req.body);
             xml = outcomeResponse('readResult', result.status, result.discription);
-            return res.status(200).send(xml);
+            
+            client.set([result.sourcedid, result.score], function(err, reply) {
+              if(!err)  
+               {console.log('Data sent to db', reply);
+                res.status(200).send(xml);}
+                else{
+                  res.status(500);
+                }
+              });
         } else {
             xml = outcomeResponse('readResult', 'failed', 'requestFailed');
             return res(200).send(xml)
@@ -65,6 +97,7 @@ router.post('/', (req, res) => {
 
 function getResult(body) {
     var result = {};
+    result.sourcedid = body.imsx_poxenveloperequest.imsx_poxbody[0].replaceresultrequest[0].resultrecord[0].sourcedguid[0].sourcedid[0];
     var score = 100 * (body.imsx_poxenveloperequest.imsx_poxbody[0].replaceresultrequest[0].resultrecord[0].result[0].resultscore[0].textstring[0])
     if (score >= 0 && score <= 100) {
         result.score = score;
