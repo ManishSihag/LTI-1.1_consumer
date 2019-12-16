@@ -11,7 +11,7 @@ var xml_builder = require('xmlbuilder');
 router.post('/',(req, res)=>{
 
 var signer =  new HMAC_SHA1();
-var lis_outcome_service_url = "http://localhost:3000/result";
+var lis_outcome_service_url = "https://consumer-lti.herokuapp.com/result";
 var tool_secret = "secret";
 //console.log(req.headers.authorization);
 

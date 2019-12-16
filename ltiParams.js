@@ -42,7 +42,7 @@
     },
     {
         "key": "lis_outcome_service_url",
-        "value":"http://localhost:3000/result"
+        "value":"https://consumer-lti.herokuapp.com/result"
     },
     {
         "key": "tool_provider_url",

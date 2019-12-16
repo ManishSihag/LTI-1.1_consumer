@@ -23,6 +23,8 @@ router.get('/', function(req, res, next) {
     oauth_version: req.query.oauth_version
   }
 
+
+
   var ltiObj = {
     tool_secret : req.query.tool_secret,
     tool_provider_url : req.query.tool_provider_url
