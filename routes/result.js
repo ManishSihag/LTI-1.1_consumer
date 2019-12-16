@@ -10,7 +10,7 @@ var xml_builder = require('xmlbuilder');
 
 router.post('/',(req, res)=>{
 
-var signer =  new HMAC_SHA1();
+//var signer =  new HMAC_SHA1();
 var lis_outcome_service_url = "https://consumer-lti.herokuapp.com/result";
 var tool_secret = "secret";
 
@@ -30,10 +30,12 @@ var reqHeaders = {
     oauth_version: authHeaders[1]
 }
 
-var service_url_parts = url.parse(lis_outcome_service_url, true);
+//var service_url_parts = url.parse(lis_outcome_service_url, true);
 
-var oauth_signature = signer.build_signature_raw(lis_outcome_service_url, service_url_parts, 'POST', reqHeaders, tool_secret);
+//var oauth_signature = signer.build_signature_raw(lis_outcome_service_url, service_url_parts, 'POST', reqHeaders, tool_secret);
+var oauth_signature = oauth.hmacsign('POST',lis_outcome_service_url,reqHeaders,tool_secret);
 var encodedSignature = specialEncode(oauth_signature);
+
 
 
 
