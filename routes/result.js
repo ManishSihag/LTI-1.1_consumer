@@ -12,8 +12,6 @@ else{
   var client = redis.createClient('6379', 'localhost', {no_ready_check: true});
 }
 
-
-
 router.post('/', (req, res) => {
 
   
