@@ -7,6 +7,7 @@ const config = require('./config')
 var indexRouter = require('./routes/index');
 var launchRouter = require('./routes/launch');
 var showResult = require('./routes/result')
+var showScore = require('./routes/scores')
 const port = process.env.PORT || config.port;
 const xmlparser = require('express-xml-bodyparser');
 var app = express();
@@ -25,6 +26,7 @@ app.use(xmlparser());
 app.use('/', indexRouter);
 app.use('/launch', launchRouter);
 app.use('/result', showResult);
+app.use('/score', showScore);
 
 app.listen(port, ()=>{
   console.log('listening on port ', port);
