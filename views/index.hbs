@@ -1,6 +1,8 @@
-<h3 class="mx-3 mt-2">{{title}}</h3>
-<hr>
 <div class="container">
+  <div class="d-flex justify-content-between mt-2">
+<h3>{{title}}</h3>
+<a href="/score"><button type="button" class="btn btn-primary">Scores</button></a></div>
+<hr>
 <form id="form" class="" action="/launch" method="GET" target="_blank">
   <div class="form-group">
       {{#ltiParameters}}
@@ -9,6 +11,6 @@
      {{/ltiParameters}}
   </div>
 <button type="submit" class="btn btn-primary">Submit</button>
-<a href="/score"><button type="button" class="btn btn-primary float-right">Scores</button></a>
+
 </form>
 </div>
