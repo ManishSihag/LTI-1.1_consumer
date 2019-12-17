@@ -4,6 +4,7 @@ var oauth = require('oauth-sign')
 var uuid = require('node-uuid');
 var xml_builder = require('xmlbuilder');
 var redis = require('redis');
+var config = require('../config/config')
 
 if(process.env.REDISCLOUD_URL){
   var client = redis.createClient(process.env.REDISCLOUD_URL, {no_ready_check: true}); 
@@ -15,8 +16,8 @@ else{
 router.post('/', (req, res) => {
 
   
-    var lis_outcome_service_url = "https://consumer-lti.herokuapp.com/result";
-    var tool_secret = "secret";
+    var lis_outcome_service_url = config.connection.lis_outcome_service_url;
+    var tool_secret = config.connection.tool_secret;
 
 
     var authHeaders = stringToArray(req.headers.authorization);

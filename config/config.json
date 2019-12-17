@@ -1,0 +1,9 @@
+{
+    "connection":{
+        "oauth_consumer_key" : "12345",
+        "tool_secret" : "secret",
+        "lis_outcome_service_url" : "https://consumer-lti.herokuapp.com/result",
+        "tool_provider_url" : "https://lti-tool-provider.herokuapp.com/lti"
+
+    }
+}
