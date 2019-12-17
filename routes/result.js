@@ -15,34 +15,27 @@ else{
 
 router.post('/', (req, res) => {
 
-  
     var lis_outcome_service_url = config.connection.lis_outcome_service_url;
     var tool_secret = config.connection.tool_secret;
 
-
     var authHeaders = stringToArray(req.headers.authorization);
-    var a = decodeURIComponent(authHeaders[5]);
+    var decoded_body_hash = decodeURIComponent(authHeaders[5]);
 
-    var oauthsignature = authHeaders[7];
-
+    var oauth_signature = authHeaders[7];
 
     var reqHeaders = {
-        oauth_body_hash: a,
+        oauth_body_hash: decoded_body_hash,
         oauth_consumer_key: authHeaders[4],
         oauth_signature_method: authHeaders[6],
         oauth_timestamp: authHeaders[3],
         oauth_nonce: authHeaders[2],
         oauth_version: authHeaders[1]
     }
+    
+    var consumer_signature = oauth.hmacsign('POST', lis_outcome_service_url, reqHeaders, tool_secret);
+    var encodedSignature = specialEncode(consumer_signature);
 
-
-    var oauth_signature = oauth.hmacsign('POST', lis_outcome_service_url, reqHeaders, tool_secret);
-    var encodedSignature = specialEncode(oauth_signature);
-
-
-
-
-    if (encodedSignature == oauthsignature) {
+    if (encodedSignature == oauth_signature) {
         console.log("Authorized:", true);
         var result;
         if (req.body.imsx_poxenveloperequest.imsx_poxbody[0].hasOwnProperty('replaceresultrequest')) {
@@ -129,7 +122,6 @@ function outcomeResponse(operation, status, discription) {
     innrerHead.ele('imsx_messageRefIdentifier', uuid.v1());
     innrerHead.ele('imsx_operationRefIdentifier', operation);
 
-
     xml = doc.end({
         pretty: true
     });
@@ -143,7 +135,6 @@ function specialEncode(string) {
 function stringToArray(str) {
 
     var strArr = str.split(',');
-
     var valueArr = [];
 
     strArr.forEach((str) => {
@@ -152,8 +143,6 @@ function stringToArray(str) {
         valueArr.push(value.replace(/^"(.*)"$/, '$1'));
         lastindex = 0;
     })
-
-
     return valueArr;
 }
 
