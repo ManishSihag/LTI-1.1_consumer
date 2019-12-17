@@ -15,40 +15,33 @@ if (process.env.REDISCLOUD_URL) {
 router.get('/', (req, res) => {
 
     var return_dataset = [];
-    client.keys('*', function(err, log_list) {
-
-
-        var keys = Object.keys(log_list);
-        var i = 0;
-
-        keys.forEach(function(l) {
-            client.get(log_list[l], function(e, o) {
+    client.keys('*', function(err, id_list) {
+    
+      var keys = Object.keys(id_list);
+      var i = 0;
+        
+      keys.forEach(function(l) {
+            client.get(id_list[l], function(err, reply) {
                 i++;
-                if (e) {
-                    console.log(e)
+                if (err) {
+                    console.log(err)
                 } else {
                     temp_data = {
-                        'key': log_list[l],
-                        'value': o
+                        'key': id_list[l],
+                        'value': reply
                     };
                     return_dataset.push(temp_data);
                 }
 
                 if (i == keys.length) {
-
-
                     res.render('scores', {
                         results: return_dataset
                     });
                 }
-
-            });
+              });
         });
 
     });
-
-
-
 })
 
 
