@@ -18,11 +18,9 @@ router.get('/', (req, res) => {
     client.keys('*', function(err, id_list) {
     
       var keys = Object.keys(id_list);
-      var i = 0;
         
       keys.forEach(function(l) {
             client.get(id_list[l], function(err, reply) {
-                i++;
                 if (err) {
                     console.log(err)
                 } else {
@@ -32,12 +30,11 @@ router.get('/', (req, res) => {
                     };
                     return_dataset.push(temp_data);
                 }
-
-                if (i == keys.length) {
-                    res.render('scores', {
+                
+                res.render('scores', {
                         results: return_dataset
                     });
-                }
+                
               });
         });
 

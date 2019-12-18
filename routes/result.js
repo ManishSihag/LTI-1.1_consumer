@@ -54,28 +54,29 @@ router.post('/', (req, res) => {
         } else if (req.body.imsx_poxenveloperequest.imsx_poxbody[0].hasOwnProperty('deleteresultrequest')) {
             result = getResult(req.body);
             xml = outcomeResponse('deleteResult', result.status, result.discription);
-            client.set([result.sourcedid, result.score], function(err, reply) {
+            client.del(result.sourcedid, function(err, reply) {
               if(!err)  
-               {console.log('Data sent to db', reply);
-                res.status(200).send(xml);}
-                else{
-                  res.status(500);
-                }
-              });
+                 {console.log('DB updated', reply);
+                  res.status(200).send(xml);}
+                  else{
+                    res.status(500);
+                  }
+                });
+            
         } else if (req.body.imsx_poxenveloperequest.imsx_poxbody[0].hasOwnProperty('readrequest')) {
             result = getResult(req.body);
             xml = outcomeResponse('readResult', result.status, result.discription);
             
-            client.set([result.sourcedid, result.score], function(err, reply) {
+            client.get(result.sourcedid, function(err, reply) {
               if(!err)  
-               {console.log('Data sent to db', reply);
+               {console.log('Read frm DB', reply);
                 res.status(200).send(xml);}
                 else{
                   res.status(500);
                 }
               });
         } else {
-            xml = outcomeResponse('readResult', 'failed', 'requestFailed');
+            xml = outcomeResponse('unknownRequest', 'failed', 'requestFailed');
             return res(200).send(xml)
         }
 
